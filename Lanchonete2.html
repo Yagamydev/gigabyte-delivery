@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bar & Lanchonete GigaByte | Delivery</title>
+    <style>
+        /* Estilos Gerais e Variáveis */
+        :root {
+            --neon-green: #39ff14;
+            --dark-bg: #0a0a0a;
+            --panel-bg: #1a1a1a;
+            --text-light: #f1f2f6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            background-image: radial-gradient(circle at center, #112211 0%, #0a0a0a 100%);
+            min-height: 100vh;
+        }
+
+        /* Cabeçalho */
+        header {
+            background-color: rgba(10, 10, 10, 0.95);
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--neon-green);
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 900;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px var(--neon-green);
+            font-style: italic;
+        }
+
+        .logo span {
+            color: var(--neon-green);
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--neon-green);
+            text-shadow: 0 0 8px var(--neon-green);
+        }
+
+        /* Banner de Destaque */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url('https://images.unsplash.com/photo-1550547660-d9450f859349?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover;
+            height: 450px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            border-bottom: 1px solid #222;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 10px;
+            color: white;
+            text-transform: uppercase;
+            font-style: italic;
+            text-shadow: 2px 2px 0px #000, 0 0 20px var(--neon-green);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: var(--neon-green);
+            margin-bottom: 25px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        /* Cardápio */
+        .cardapio {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .cardapio h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: var(--neon-green);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
+        }
+
+        .grid-produtos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .produto {
+            background-color: var(--panel-bg);
+            border-radius: 15px;
+            border: 1px solid #333;
+            overflow: hidden;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .produto:hover {
+            transform: translateY(-5px);
+            border-color: var(--neon-green);
+            box-shadow: 0 10px 20px rgba(57, 255, 20, 0.2);
+        }
+
+        .produto img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-bottom: 2px solid #333;
+        }
+
+        .produto-info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .produto-info h3 {
+            margin-bottom: 10px;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .produto-info p {
+            color: #aaa;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            min-height: 40px;
+        }
+
+        .preco {
+            font-size: 1.8rem;
+            color: var(--neon-green);
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        /* Botões */
+        .btn-add {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: transparent;
+            color: var(--neon-green);
+            border: 2px solid var(--neon-green);
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .btn-add:hover {
+            background-color: var(--neon-green);
+            color: black;
+            box-shadow: 0 0 15px var(--neon-green);
+        }
+
+        /* Carrinho de Compras Lateral */
+        #cart-panel {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            max-width: 100vw;
+            height: 100vh;
+            background-color: var(--panel-bg);
+            border-left: 2px solid var(--neon-green);
+            box-shadow: -5px 0 15px rgba(0,0,0,0.8);
+            z-index: 999;
+            transition: 0.4s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        #cart-panel.open {
+            right: 0;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+
+        .cart-header h2 {
+            color: var(--neon-green);
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        .cart-items {
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #222;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .cart-item-title {
+            font-weight: bold;
+            color: white;
+        }
+
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cart-item-controls button {
+            background: #444;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .cart-footer {
+            border-top: 1px solid #333;
+            padding-top: 15px;
+        }
+
+        .cart-total {
+            font-size: 1.5rem;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .cart-total span:last-child {
+            color: var(--neon-green);
+            font-weight: bold;
+        }
+
+        .btn-checkout {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            color: white;
+            transition: 0.3s;
+        }
+
+        .btn-whatsapp { background-color: #25D366; }
+        .btn-whatsapp:hover { background-color: #128C7E; box-shadow: 0 0 15px #25D366; }
+        
+        .btn-instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+        .btn-instagram:hover { opacity: 0.9; box-shadow: 0 0 15px #dc2743; }
+
+        /* Botão Flutuante do Carrinho */
+        .cart-fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--neon-green);
+            color: black;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(57, 255, 20, 0.5);
+            z-index: 998;
+            transition: 0.3s;
+            border: none;
+        }
+
+        .cart-fab:hover {
+            transform: scale(1.1);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: red;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: bold;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Rodapé */
+        footer {
+            background-color: #050505;
+            border-top: 1px solid #222;
+            color: #aaa;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 40px;
+        }
+
+        footer h3 {
+            color: var(--neon-green);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        footer p { margin-bottom: 5px; }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 15px;
+            }
+            nav {
+                margin-top: 15px;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cabeçalho -->
+    <header>
+        <div class="logo">GIGA<span>BYTE</span></div>
+        <nav>
+            <a href="#inicio">Início</a>
+            <a href="#cardapio">Cardápio</a>
+            <a href="#contato">Contato</a>
+        </nav>
+    </header>
+
+    <!-- Banner -->
+    <section id="inicio" class="hero">
+        <h1>Os Melhores Lanches da Cidade!</h1>
+        <p>Peça já o seu lanche e receba no conforto da sua casa!</p>
+        <p style="font-size: 1rem; color: #fff; font-weight: normal; margin-top:-15px;">⚡ Rápido e Prático | 📍 Perto de você | ⭐ Qualidade Garantida</p>
+    </section>
+
+    <!-- Seção de Cardápio -->
+    <section id="cardapio" class="cardapio">
+        <h2>Cardápio Digital</h2>
+        <div class="grid-produtos">
+            
+            <!-- Produto 1 -->
+            <div class="produto">
+                <img src="img/high-angle-delicious-food-croquettes.jpg">
+                <div class="produto-info">
+                    <h3>Coxinha de Frango</h3>
+                    <p>Farinha, Frango.</p>
+                    <div class="preco">R$ 5,00</div>
+                    <button class="btn-add" onclick="adicionarAoCarrinho('Coxinha de Frango', 5.00)">Adicionar 🛒</button>
+                </div>
+            </div>
+
+            <!-- Produto 2 -->
+            <div class="produto">
+                <img src="img/close-up-traditional-indian-bakery-pies.jpg">
+                <div class="produto-info">
+                    <h3>Pastel de Queijo</h3>
+                    <p>Farinha, Queijo.</p>
+                    <div class="preco">R$ 5,00</div>
+                    <button class="btn-add" onclick="adicionarAoCarrinho('Pastel de Queijo', 5.00)">Adicionar 🛒</button>
+                </div>
+            </div>
+
+            <!-- Produto 3 -->
+            <div class="produto">
+                <img src="img/tart-cheese.jpg">
+                <div class="produto-info">
+                    <h3>Empadinhas</h3>
+                    <p>Farinha, Queijo.</p>
+                    <div class="preco">R$ 5,00</div>
+                    <button class="btn-add" onclick="adicionarAoCarrinho('Empadinhas', 5.00)">Adicionar 🛒</button>
+                </div>
+            </div>
+
+            <!-- Produto 4 -->
+            <div class="produto">
+                <img src="https://images.unsplash.com/photo-1628840042765-356cda07504e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Refrigerante">
+                <div class="produto-info">
+                    <h3>Pizza Familia</h3>
+                    <p>Farinha, Queijo, Molho, Calabresa.</p>
+                    <div class="preco">R$ 45,00</div>
+                    <button class="btn-add" onclick="adicionarAoCarrinho('Pizza Familia', 45.00)">Adicionar 🛒</button>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- Rodapé / Contato -->
+    <footer id="contato">
+        <h3>Lanchonete GigaByte</h3>
+        <p>📍 Rua Francisco Cabral, 209 - Centro - Riachão do Bacamarte-PB</p>
+        <p>📞 WhatsApp: (83) 9 9338-1587 / (83) 9 9343-0616</p>
+        <p>📱 Instagram: @bar_e_lanchonete_gigabyte</p>
+        <p>🕒 Horário de funcionamento: Terça a Domingo, das 18h às 23h</p>
+        <br>
+        <p><small>&copy; 2026 GigaBytes. Todos os direitos reservados.</small></p>
+    </footer>
+
+    <!-- Botão Flutuante do Carrinho -->
+    <button class="cart-fab" onclick="toggleCart()">
+        🛒
+        <span class="cart-badge" id="cart-badge">0</span>
+    </button>
+
+    <!-- Painel do Carrinho -->
+    <div id="cart-panel">
+        <div class="cart-header">
+            <h2>Seu Pedido</h2>
+            <button class="close-cart" onclick="toggleCart()">&times;</button>
+        </div>
+        
+        <div class="cart-items" id="cart-items-container">
+            <!-- Itens inseridos pelo JS -->
+        </div>
+
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cart-total-price">R$ 0,00</span>
+            </div>
+            
+            <button class="btn-checkout btn-whatsapp" onclick="finalizarPedido('whatsapp')">
+                Finalizar pelo WhatsApp
+            </button>
+            
+            <button class="btn-checkout btn-instagram" onclick="finalizarPedido('instagram')">
+                Finalizar pelo Instagram
+            </button>
+            <p style="font-size: 0.75rem; color: #888; text-align: center; margin-top: 5px;">
+                *No Instagram, seu pedido será copiado e você deve colar no direct.*
+            </p>
+        </div>
+    </div>
+
+    <!-- Script do Carrinho de Compras -->
+    <script>
+        let carrinho = [];
+
+        function formatarMoeda(valor) {
+            return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        }
+
+        function adicionarAoCarrinho(nome, preco) {
+            const itemExistente = carrinho.find(item => item.nome === nome);
+            
+            if (itemExistente) {
+                itemExistente.quantidade += 1;
+            } else {
+                carrinho.push({ nome, preco, quantidade: 1 });
+            }
+            
+            atualizarCarrinhoUI();
+            
+            // Abre o carrinho na primeira vez que adiciona
+            if(!document.getElementById('cart-panel').classList.contains('open')) {
+                toggleCart();
+            }
+        }
+
+        function alterarQuantidade(nome, delta) {
+            const item = carrinho.find(item => item.nome === nome);
+            if (item) {
+                item.quantidade += delta;
+                if (item.quantidade <= 0) {
+                    carrinho = carrinho.filter(i => i.nome !== nome);
+                }
+                atualizarCarrinhoUI();
+            }
+        }
+
+        function atualizarCarrinhoUI() {
+            const container = document.getElementById('cart-items-container');
+            const totalElement = document.getElementById('cart-total-price');
+            const badge = document.getElementById('cart-badge');
+            
+            container.innerHTML = '';
+            let total = 0;
+            let quantidadeTotal = 0;
+
+            if(carrinho.length === 0) {
+                container.innerHTML = '<p style="color: #aaa; text-align: center; margin-top: 20px;">Seu carrinho está vazio.</p>';
+            }
+
+            carrinho.forEach(item => {
+                const subtotal = item.preco * item.quantidade;
+                total += subtotal;
+                quantidadeTotal += item.quantidade;
+
+                container.innerHTML += `
+                    <div class="cart-item">
+                        <div>
+                            <div class="cart-item-title">${item.nome}</div>
+                            <div style="color: var(--neon-green); font-size: 0.9rem;">${formatarMoeda(item.preco)} un.</div>
+                        </div>
+                        <div class="cart-item-controls">
+                            <button onclick="alterarQuantidade('${item.nome}', -1)">-</button>
+                            <span>${item.quantidade}</span>
+                            <button onclick="alterarQuantidade('${item.nome}', 1)">+</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            totalElement.innerText = formatarMoeda(total);
+            badge.innerText = quantidadeTotal;
+        }
+
+        function toggleCart() {
+            const painel = document.getElementById('cart-panel');
+            painel.classList.toggle('open');
+        }
+
+        function gerarTextoPedido() {
+            if (carrinho.length === 0) {
+                alert('Adicione itens ao carrinho primeiro!');
+                return null;
+            }
+
+            let texto = "🍔 *NOVO PEDIDO - GIGABYTE* 🍔\n\n";
+            let total = 0;
+
+            carrinho.forEach(item => {
+                let subtotal = item.preco * item.quantidade;
+                texto += `▪️ ${item.quantidade}x ${item.nome} - ${formatarMoeda(subtotal)}\n`;
+                total += subtotal;
+            });
+
+            texto += `\n💰 *Total do Pedido: ${formatarMoeda(total)}*\n`;
+            texto += "\nPor favor, confirmem o meu pedido! Aguardo informações sobre taxa de entrega e tempo estimado.";
+            
+            return texto;
+        }
+
+        function finalizarPedido(plataforma) {
+            const textoPedido = gerarTextoPedido();
+            if (!textoPedido) return;
+
+            if (plataforma === 'whatsapp') {
+                const numeroWhatsApp = "5583993381587"; // Número primário
+                const textoEncoded = encodeURIComponent(textoPedido);
+                const url = `https://wa.me/${numeroWhatsApp}?text=${textoEncoded}`;
+                window.open(url, '_blank');
+            } 
+            else if (plataforma === 'instagram') {
+                // Copia o texto para a área de transferência
+                navigator.clipboard.writeText(textoPedido).then(() => {
+                    alert('✅ Pedido copiado com sucesso!\n\nVocê será redirecionado para o Instagram. COLOQUE (Cole) a mensagem no Direct da lanchonete.');
+                    const urlInstagram = `https://ig.me/m/bar_e_lanchonete_gigabyte`;
+                    window.open(urlInstagram, '_blank');
+                }).catch(err => {
+                    alert('Erro ao copiar pedido. Tente pelo WhatsApp.');
+                });
+            }
+        }
+        
+        // Inicializa interface limpa
+        atualizarCarrinhoUI();
+    </script>
+</body>
+</html>
