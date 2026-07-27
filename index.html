@@ -102,11 +102,11 @@
         /* Cardápio */
         .cardapio {
             padding: 60px 20px;
-            max-width: 1200px;
+            max-width: 1400px; /* Aumentado um pouco para caber duas colunas melhor */
             margin: 0 auto;
         }
 
-        .cardapio h2 {
+        .titulo-principal {
             text-align: center;
             font-size: 2.5rem;
             margin-bottom: 40px;
@@ -116,10 +116,41 @@
             text-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
         }
 
+        /* Layout em Duas Colunas para Categorias */
+        .layout-categorias {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start; /* Importante para o sticky funcionar independente em cada coluna */
+        }
+
+        .coluna-categoria {
+            position: relative;
+        }
+
+        /* Títulos das Categorias (Salgados e Bebidas) - FLUTUANTES */
+        .titulo-categoria {
+            text-align: center;
+            font-size: 2rem;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 15px 0;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--neon-green);
+            background-color: rgba(10, 10, 10, 0.98); /* Fundo para não misturar com as imagens ao rolar */
+            
+            /* Efeito Flutuante (Sticky) */
+            position: sticky;
+            top: 73px; /* Fica logo abaixo do header (que tem ~73px de altura) */
+            z-index: 90;
+            box-shadow: 0 10px 10px -10px rgba(0,0,0,0.8);
+        }
+
         .grid-produtos {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
         }
 
         .produto {
@@ -373,6 +404,13 @@
         footer p { margin-bottom: 5px; }
 
         /* Responsividade */
+        @media (max-width: 992px) {
+            .layout-categorias {
+                grid-template-columns: 1fr; /* No celular/tablet, fica uma categoria debaixo da outra */
+                gap: 60px;
+            }
+        }
+
         @media (max-width: 768px) {
             header {
                 flex-direction: column;
@@ -386,6 +424,9 @@
             }
             .hero p {
                 font-size: 1rem;
+            }
+            .titulo-categoria {
+                top: 105px; /* Ajuste do sticky para celular, pois o cabeçalho fica mais alto */
             }
         }
     </style>
@@ -411,275 +452,557 @@
 
     <!-- Seção de Cardápio -->
     <section id="cardapio" class="cardapio">
-        <h2>Cardápio Digital</h2>
-        <h2>Salgados</h2>
-        <div class="grid-produtos">
+        <h2 class="titulo-principal">Cardápio Digital</h2>
+        
+        <!-- Container Lado a Lado -->
+        <div class="layout-categorias">
             
-            <!-- Produto 1 -->
-            <div class="produto">
-                <img src="img/high-angle-delicious-food-croquettes.jpg">
-                <div class="produto-info">
-                    <h3>Bolo de Macacheira</h3>
-                    <p>Farinha, Frango.</p>
-                    <div class="preco">R$ 5,00</div>
-                    <button class="btn-add" onclick="adicionarAoCarrinho('Bolo de Macacheira', 5.00)">Adicionar 🛒</button>
-                </div>
-            </div>
+            <!-- COLUNA ESQUERDA: SALGADOS -->
+            <div class="coluna-categoria">
+                <h2 class="titulo-categoria">Salgados</h2>
+                
+                <div class="grid-produtos">
+                    
+                    <!-- Produto 1 -->
+                    <div class="produto">
+                        <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Bolo de Macacheira">
+                        <div class="produto-info">
+                            <h3>Bolo de Macacheira</h3>
+                            <p>Farinha, Frango.</p>
+                            <div class="preco">R$ 5,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Bolo de Macacheira', 5.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
 
-            <!-- Produto 2 -->
-            <div class="produto">
-                <img src="img/close-up-traditional-indian-bakery-pies.jpg">
-                <div class="produto-info">
-                    <h3>Bolinho Misto</h3>
-                    <p>Farinha, Queijo.</p>
-                    <div class="preco">R$ 5,00</div>
-                    <button class="btn-add" onclick="adicionarAoCarrinho('Bolinho Misto', 5.00)">Adicionar 🛒</button>
-                </div>
-            </div>
+                    <!-- Produto 2 -->
+                    <div class="produto">
+                        <img src="img/close-up-traditional-indian-bakery-pies.jpg" alt="Bolinho Misto">
+                        <div class="produto-info">
+                            <h3>Bolinho Misto</h3>
+                            <p>Farinha, Queijo.</p>
+                            <div class="preco">R$ 5,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Bolinho Misto', 5.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
 
-            <!-- Produto 3 -->
-            <div class="produto">
-                <img src="img/tart-cheese.jpg">
-                <div class="produto-info">
-                    <h3>Cachorro Quente</h3>
-                    <p>Farinha, Queijo.</p>
-                    <div class="preco">R$ 5,00</div>
-                    <button class="btn-add" onclick="adicionarAoCarrinho('Cachorro Quente', 5.00)">Adicionar 🛒</button>
-                </div>
-            </div>
+                    <!-- Produto 3 -->
+                    <div class="produto">
+                        <img src="img/tart-cheese.jpg" alt="Cachorro Quente">
+                        <div class="produto-info">
+                            <h3>Cachorro Quente</h3>
+                            <p>Farinha, Queijo.</p>
+                            <div class="preco">R$ 5,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Cachorro Quente', 5.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
 
-            <!-- Produto 4 -->
-            <div class="produto">
-                <img src="img/tart-cheese.jpg">
-                <div class="produto-info">
-                    <h3>Coxinha de Frango</h3>
-                    <p>Farinha, Queijo, Molho, Calabresa.</p>
-                    <div class="preco">R$ 5,00</div>
-                    <button class="btn-add" onclick="adicionarAoCarrinho('Coxinha de Frango', 5.00)">Adicionar 🛒</button>
+                    <!-- Produto 4 -->
+                    <div class="produto">
+                        <img src="img/tart-cheese.jpg" alt="Coxinha de Frango">
+                        <div class="produto-info">
+                            <h3>Coxinha de Frango</h3>
+                            <p>Farinha, Queijo, Molho, Calabresa.</p>
+                            <div class="preco">R$ 5,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Coxinha de Frango', 5.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Produto 5 -->
+                    <div class="produto">
+                        <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Coxinha Pequena">
+                        <div class="produto-info">
+                            <h3>Coxinha Pequena</h3>
+                            <p>Farinha, Frango.</p>
+                            <div class="preco">R$ 0,60</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Coxinha Pequena', 0.60)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Produto 6 -->
+                    <div class="produto">
+                        <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Coxinha P/ Revenda">
+                        <div class="produto-info">
+                            <h3>Coxinha P/ Revenda</h3>
+                            <p>Farinha, Frango.</p>
+                            <div class="preco">R$ 3,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Coxinha P/ Revenda', 3.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Produto 7 -->
+                    <div class="produto">
+                        <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Empadinha">
+                        <div class="produto-info">
+                            <h3>Empadinha</h3>
+                            <p>Farinha, Frango.</p>
+                            <div class="preco">R$ 5,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Empadinha', 5.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Produto 8 -->
+                    <div class="produto">
+                        <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Empadão (Fatia)">
+                        <div class="produto-info">
+                            <h3>Empadão (Fatia)</h3>
+                            <p>Farinha, Frango.</p>
+                            <div class="preco">R$ 7,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Empadão (Fatia)', 7.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Produto 9 -->
+                    <div class="produto">
+                        <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Empadão (Unidade)">
+                        <div class="produto-info">
+                            <h3>Empadão (Unidade)</h3>
+                            <p>Farinha, Frango.</p>
+                            <div class="preco">R$ 40,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Empadão (Unidade)', 40.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Produto 10 -->
+                    <div class="produto">
+                        <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Enrroladinho de Salsicha">
+                        <div class="produto-info">
+                            <h3>Enrroladinho de Salsicha</h3>
+                            <p>Farinha, Frango.</p>
+                            <div class="preco">R$ 5,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Enrroladinho de Salsicha', 5.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Produto 11 -->
+                    <div class="produto">
+                        <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Hamburguer">
+                        <div class="produto-info">
+                            <h3>Hamburguer</h3>
+                            <p>Farinha, Frango.</p>
+                            <div class="preco">R$ 5,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Hamburguer', 5.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Produto 12 -->
+                    <div class="produto">
+                        <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Joelho Misto">
+                        <div class="produto-info">
+                            <h3>Joelho Misto</h3>
+                            <p>Farinha, Frango.</p>
+                            <div class="preco">R$ 5,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Joelho Misto', 5.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Produto 13 -->
+                    <div class="produto">
+                        <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Mini Esfiha">
+                        <div class="produto-info">
+                            <h3>Mini Esfiha</h3>
+                            <p>Farinha, Frango.</p>
+                            <div class="preco">R$ 5,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Mini Esfiha', 5.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Produto 14 -->
+                    <div class="produto">
+                        <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Mini Pizza">
+                        <div class="produto-info">
+                            <h3>Mini Pizza</h3>
+                            <p>Farinha, Frango.</p>
+                            <div class="preco">R$ 6,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Mini Pizza', 6.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Produto 15 -->
+                    <div class="produto">
+                        <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Outro Salgados P/ Revenda">
+                        <div class="produto-info">
+                            <h3>Outros Salgados</h3>
+                            <p>Farinha, Frango.</p>
+                            <div class="preco">R$ 3,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Outros Salgados P/ Revenda', 3.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Produto 16 -->
+                    <div class="produto">
+                        <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Pastel P/ Revenda">
+                        <div class="produto-info">
+                            <h3>Pastel P/ Revenda</h3>
+                            <p>Farinha, Frango.</p>
+                            <div class="preco">R$ 3,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Pastel P/ Revenda', 3.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Produto 17 -->
+                    <div class="produto">
+                        <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Pastel Chinês">
+                        <div class="produto-info">
+                            <h3>Pastel Chinês</h3>
+                            <p>Farinha, Frango.</p>
+                            <div class="preco">R$ 5,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Pastel Chinês', 5.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Produto 18 -->
+                    <div class="produto">
+                        <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Pastel de Feira">
+                        <div class="produto-info">
+                            <h3>Pastel de Feira</h3>
+                            <p>Farinha, Frango.</p>
+                            <div class="preco">R$ 5,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Pastel de Feira', 5.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Produto 19 -->
+                    <div class="produto">
+                        <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Pastelão de Frango">
+                        <div class="produto-info">
+                            <h3>Pastelão de Frango</h3>
+                            <p>Farinha, Frango.</p>
+                            <div class="preco">R$ 5,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Pastelão de Frango', 5.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Produto 20 -->
+                    <div class="produto">
+                        <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Pastelão Misto">
+                        <div class="produto-info">
+                            <h3>Pastelão Misto</h3>
+                            <p>Farinha, Frango.</p>
+                            <div class="preco">R$ 5,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Pastelão Misto', 5.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Produto 21 -->
+                    <div class="produto">
+                        <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Pastel de Forno">
+                        <div class="produto-info">
+                            <h3>Pastel de Forno</h3>
+                            <p>Farinha, Frango.</p>
+                            <div class="preco">R$ 5,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Pastel de Forno', 5.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Produto 22 -->
+                    <div class="produto">
+                        <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Pastel de Queijo">
+                        <div class="produto-info">
+                            <h3>Pastel de Queijo</h3>
+                            <p>Farinha, Frango.</p>
+                            <div class="preco">R$ 5,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Pastel de Queijo', 5.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Produto 23 -->
+                    <div class="produto">
+                        <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Pizza Familia">
+                        <div class="produto-info">
+                            <h3>Pizza Familia</h3>
+                            <p>Farinha, Frango.</p>
+                            <div class="preco">R$ 40,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Pizza Familia', 40.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Produto 24 -->
+                    <div class="produto">
+                        <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Salgados de Festa">
+                        <div class="produto-info">
+                            <h3>Salgados de Festa</h3>
+                            <p>Farinha, Frango.</p>
+                            <div class="preco">R$ 0,60</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Salgados de Festa', 0.60)">Adicionar 🛒</button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            
-            <!-- Produto 5 -->
-            <div class="produto">
-                <img src="img/high-angle-delicious-food-croquettes.jpg">
-                <div class="produto-info">
-                    <h3>Coxinha Pequena</h3>
-                    <p>Farinha, Frango.</p>
-                    <div class="preco">R$ 0,60</div>
-                    <button class="btn-add" onclick="adicionarAoCarrinho('Coxinha Pequena', 0.60)">Adicionar 🛒</button>
+            </div> <!-- Fim Coluna Salgados -->
+
+            <!-- COLUNA DIREITA: BEBIDAS -->
+            <div class="coluna-categoria">
+                <h2 class="titulo-categoria">Bebidas</h2>
+                
+                <div class="grid-produtos">
+                    
+                    <!-- Bebida 1 -->
+                    <div class="produto">
+                        <!-- Lembre-se de substituir o caminho da imagem pela sua imagem real -->
+                        <img src="img/coca-cola-2l.jpg" alt="Coca-Cola 2L" onerror="this.src='https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=300&q=80'">
+                        <div class="produto-info">
+                            <h3>Coca-Cola 2L</h3>
+                            <p>Refrigerante Gelado.</p>
+                            <div class="preco">R$ 12,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Coca-Cola 2L', 12.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+
+                    <!-- Bebida 2 -->
+                    <div class="produto">
+                        <img src="img/guarana-1l.jpg" alt="Guaraná Antarctica 1L" onerror="this.src='https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?auto=format&fit=crop&w=300&q=80'">
+                        <div class="produto-info">
+                            <h3>Guaraná Antarctica 1L</h3>
+                            <p>Refrigerante Gelado.</p>
+                            <div class="preco">R$ 8,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Guaraná Antarctica 1L', 8.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+
+                    <!-- Bebida 3 -->
+                    <div class="produto">
+                        <img src="img/suco-laranja.jpg" alt="Suco de Laranja" onerror="this.src='https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=300&q=80'">
+                        <div class="produto-info">
+                            <h3>Suco de Laranja 500ml</h3>
+                            <p>Suco Natural feito na hora.</p>
+                            <div class="preco">R$ 7,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Suco de Laranja 500ml', 7.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+
+                    <!-- Bebida 4 -->
+                    <div class="produto">
+                        <img src="img/agua-mineral.jpg" alt="Água Mineral" onerror="this.src='https://images.unsplash.com/photo-1559839914-11aae4945413?auto=format&fit=crop&w=300&q=80'">
+                        <div class="produto-info">
+                            <h3>Água Mineral 500ml</h3>
+                            <p>Sem gás.</p>
+                            <div class="preco">R$ 3,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Água Mineral S/ Gás', 3.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+
+                    <!-- Bebida 5 -->
+                    <div class="produto">
+                        <!-- Lembre-se de substituir o caminho da imagem pela sua imagem real -->
+                        <img src="img/coca-cola-2l.jpg" alt="Coca-Cola 2L" onerror="this.src='https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=300&q=80'">
+                        <div class="produto-info">
+                            <h3>Coca-Cola 2L</h3>
+                            <p>Refrigerante Gelado.</p>
+                            <div class="preco">R$ 12,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Coca-Cola 2L', 12.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+
+                    <!-- Bebida 6 -->
+                    <div class="produto">
+                        <!-- Lembre-se de substituir o caminho da imagem pela sua imagem real -->
+                        <img src="img/coca-cola-2l.jpg" alt="Coca-Cola 2L" onerror="this.src='https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=300&q=80'">
+                        <div class="produto-info">
+                            <h3>Coca-Cola 2L</h3>
+                            <p>Refrigerante Gelado.</p>
+                            <div class="preco">R$ 12,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Coca-Cola 2L', 12.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+
+                    <!-- Bebida 7 -->
+                    <div class="produto">
+                        <!-- Lembre-se de substituir o caminho da imagem pela sua imagem real -->
+                        <img src="img/coca-cola-2l.jpg" alt="Coca-Cola 2L" onerror="this.src='https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=300&q=80'">
+                        <div class="produto-info">
+                            <h3>Coca-Cola 2L</h3>
+                            <p>Refrigerante Gelado.</p>
+                            <div class="preco">R$ 12,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Coca-Cola 2L', 12.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+
+                    <!-- Bebida 8 -->
+                    <div class="produto">
+                        <!-- Lembre-se de substituir o caminho da imagem pela sua imagem real -->
+                        <img src="img/coca-cola-2l.jpg" alt="Coca-Cola 2L" onerror="this.src='https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=300&q=80'">
+                        <div class="produto-info">
+                            <h3>Coca-Cola 2L</h3>
+                            <p>Refrigerante Gelado.</p>
+                            <div class="preco">R$ 12,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Coca-Cola 2L', 12.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+
+                    <!-- Bebida 9 -->
+                    <div class="produto">
+                        <!-- Lembre-se de substituir o caminho da imagem pela sua imagem real -->
+                        <img src="img/coca-cola-2l.jpg" alt="Coca-Cola 2L" onerror="this.src='https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=300&q=80'">
+                        <div class="produto-info">
+                            <h3>Coca-Cola 2L</h3>
+                            <p>Refrigerante Gelado.</p>
+                            <div class="preco">R$ 12,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Coca-Cola 2L', 12.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+
+                    <!-- Bebida 10 -->
+                    <div class="produto">
+                        <!-- Lembre-se de substituir o caminho da imagem pela sua imagem real -->
+                        <img src="img/coca-cola-2l.jpg" alt="Coca-Cola 2L" onerror="this.src='https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=300&q=80'">
+                        <div class="produto-info">
+                            <h3>Coca-Cola 2L</h3>
+                            <p>Refrigerante Gelado.</p>
+                            <div class="preco">R$ 12,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Coca-Cola 2L', 12.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+
+                    <!-- Bebida 11 -->
+                    <div class="produto">
+                        <!-- Lembre-se de substituir o caminho da imagem pela sua imagem real -->
+                        <img src="img/coca-cola-2l.jpg" alt="Coca-Cola 2L" onerror="this.src='https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=300&q=80'">
+                        <div class="produto-info">
+                            <h3>Coca-Cola 2L</h3>
+                            <p>Refrigerante Gelado.</p>
+                            <div class="preco">R$ 12,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Coca-Cola 2L', 12.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+
+                    <!-- Bebida 12 -->
+                    <div class="produto">
+                        <!-- Lembre-se de substituir o caminho da imagem pela sua imagem real -->
+                        <img src="img/coca-cola-2l.jpg" alt="Coca-Cola 2L" onerror="this.src='https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=300&q=80'">
+                        <div class="produto-info">
+                            <h3>Coca-Cola 2L</h3>
+                            <p>Refrigerante Gelado.</p>
+                            <div class="preco">R$ 12,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Coca-Cola 2L', 12.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+
+                    <!-- Bebida 13 -->
+                    <div class="produto">
+                        <!-- Lembre-se de substituir o caminho da imagem pela sua imagem real -->
+                        <img src="img/coca-cola-2l.jpg" alt="Coca-Cola 2L" onerror="this.src='https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=300&q=80'">
+                        <div class="produto-info">
+                            <h3>Coca-Cola 2L</h3>
+                            <p>Refrigerante Gelado.</p>
+                            <div class="preco">R$ 12,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Coca-Cola 2L', 12.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+
+                    <!-- Bebida 14 -->
+                    <div class="produto">
+                        <!-- Lembre-se de substituir o caminho da imagem pela sua imagem real -->
+                        <img src="img/coca-cola-2l.jpg" alt="Coca-Cola 2L" onerror="this.src='https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=300&q=80'">
+                        <div class="produto-info">
+                            <h3>Coca-Cola 2L</h3>
+                            <p>Refrigerante Gelado.</p>
+                            <div class="preco">R$ 12,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Coca-Cola 2L', 12.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Bebida 15 -->
+                    <div class="produto">
+                        <img src="img/guarana-1l.jpg" alt="Guaraná Antarctica 1L" onerror="this.src='https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?auto=format&fit=crop&w=300&q=80'">
+                        <div class="produto-info">
+                            <h3>Guaraná Antarctica 1L</h3>
+                            <p>Refrigerante Gelado.</p>
+                            <div class="preco">R$ 8,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Guaraná Antarctica 1L', 8.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+
+                    <!-- Bebida 16 -->
+                    <div class="produto">
+                        <img src="img/guarana-1l.jpg" alt="Guaraná Antarctica 1L" onerror="this.src='https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?auto=format&fit=crop&w=300&q=80'">
+                        <div class="produto-info">
+                            <h3>Guaraná Antarctica 1L</h3>
+                            <p>Refrigerante Gelado.</p>
+                            <div class="preco">R$ 8,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Guaraná Antarctica 1L', 8.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+
+                    <!-- Bebida 17 -->
+                    <div class="produto">
+                        <img src="img/guarana-1l.jpg" alt="Guaraná Antarctica 1L" onerror="this.src='https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?auto=format&fit=crop&w=300&q=80'">
+                        <div class="produto-info">
+                            <h3>Guaraná Antarctica 1L</h3>
+                            <p>Refrigerante Gelado.</p>
+                            <div class="preco">R$ 8,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Guaraná Antarctica 1L', 8.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+
+                    <!-- Bebida 18 -->
+                    <div class="produto">
+                        <img src="img/guarana-1l.jpg" alt="Guaraná Antarctica 1L" onerror="this.src='https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?auto=format&fit=crop&w=300&q=80'">
+                        <div class="produto-info">
+                            <h3>Guaraná Antarctica 1L</h3>
+                            <p>Refrigerante Gelado.</p>
+                            <div class="preco">R$ 8,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Guaraná Antarctica 1L', 8.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+
+                    <!-- Bebida 19 -->
+                    <div class="produto">
+                        <img src="img/guarana-1l.jpg" alt="Guaraná Antarctica 1L" onerror="this.src='https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?auto=format&fit=crop&w=300&q=80'">
+                        <div class="produto-info">
+                            <h3>Guaraná Antarctica 1L</h3>
+                            <p>Refrigerante Gelado.</p>
+                            <div class="preco">R$ 8,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Guaraná Antarctica 1L', 8.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+
+                    <!-- Bebida 20 -->
+                    <div class="produto">
+                        <img src="img/suco-laranja.jpg" alt="Suco de Laranja" onerror="this.src='https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=300&q=80'">
+                        <div class="produto-info">
+                            <h3>Suco de Laranja 500ml</h3>
+                            <p>Suco Natural feito na hora.</p>
+                            <div class="preco">R$ 7,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Suco de Laranja 500ml', 7.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+
+                    <!-- Bebida 21 -->
+                    <div class="produto">
+                        <img src="img/suco-laranja.jpg" alt="Suco de Laranja" onerror="this.src='https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=300&q=80'">
+                        <div class="produto-info">
+                            <h3>Suco de Laranja 500ml</h3>
+                            <p>Suco Natural feito na hora.</p>
+                            <div class="preco">R$ 7,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Suco de Laranja 500ml', 7.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+
+                    <!-- Bebida 22 -->
+                    <div class="produto">
+                        <img src="img/suco-laranja.jpg" alt="Suco de Laranja" onerror="this.src='https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=300&q=80'">
+                        <div class="produto-info">
+                            <h3>Suco de Laranja 500ml</h3>
+                            <p>Suco Natural feito na hora.</p>
+                            <div class="preco">R$ 7,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Suco de Laranja 500ml', 7.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+
+                    <!-- Bebida 23 -->
+                    <div class="produto">
+                        <img src="img/suco-laranja.jpg" alt="Suco de Laranja" onerror="this.src='https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=300&q=80'">
+                        <div class="produto-info">
+                            <h3>Suco de Laranja 500ml</h3>
+                            <p>Suco Natural feito na hora.</p>
+                            <div class="preco">R$ 7,00</div>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Suco de Laranja 500ml', 7.00)">Adicionar 🛒</button>
+                        </div>
+                    </div>
+
                 </div>
-            </div>
-            
-            <!-- Produto 6 -->
-            <div class="produto">
-                <img src="img/high-angle-delicious-food-croquettes.jpg">
-                <div class="produto-info">
-                    <h3>Coxinha P/ Revenda</h3>
-                    <p>Farinha, Frango.</p>
-                    <div class="preco">R$ 3,00</div>
-                    <button class="btn-add" onclick="adicionarAoCarrinho('Coxinha P/ Revenda', 3.00)">Adicionar 🛒</button>
-                </div>
-            </div>
-            
-            <!-- Produto 7 -->
-            <div class="produto">
-                <img src="img/high-angle-delicious-food-croquettes.jpg">
-                <div class="produto-info">
-                    <h3>Empadinha</h3>
-                    <p>Farinha, Frango.</p>
-                    <div class="preco">R$ 5,00</div>
-                    <button class="btn-add" onclick="adicionarAoCarrinho('Empadinha', 5.00)">Adicionar 🛒</button>
-                </div>
-            </div>
-            
-            <!-- Produto 8 -->
-            <div class="produto">
-                <img src="img/high-angle-delicious-food-croquettes.jpg">
-                <div class="produto-info">
-                    <h3>Empadão (Fatia)</h3>
-                    <p>Farinha, Frango.</p>
-                    <div class="preco">R$ 7 ,00</div>
-                    <button class="btn-add" onclick="adicionarAoCarrinho('Empadão (Fatia)', 7.00)">Adicionar 🛒</button>
-                </div>
-            </div>
-            
-            <!-- Produto 9 -->
-            <div class="produto">
-                <img src="img/high-angle-delicious-food-croquettes.jpg">
-                <div class="produto-info">
-                    <h3>Empadão (Unidade)</h3>
-                    <p>Farinha, Frango.</p>
-                    <div class="preco">R$ 40,00</div>
-                    <button class="btn-add" onclick="adicionarAoCarrinho('Empadão (Unidade)', 40.00)">Adicionar 🛒</button>
-                </div>
-            </div>
-            
-            <!-- Produto 10 -->
-            <div class="produto">
-                <img src="img/high-angle-delicious-food-croquettes.jpg">
-                <div class="produto-info">
-                    <h3>Enrroladinho de Salsicha</h3>
-                    <p>Farinha, Frango.</p>
-                    <div class="preco">R$ 5,00</div>
-                    <button class="btn-add" onclick="adicionarAoCarrinho('Enrroladinho de Salsicha', 5.00)">Adicionar 🛒</button>
-                </div>
-            </div>
-            
-            <!-- Produto 11 -->
-            <div class="produto">
-                <img src="img/high-angle-delicious-food-croquettes.jpg">
-                <div class="produto-info">
-                    <h3>Hamburguer</h3>
-                    <p>Farinha, Frango.</p>
-                    <div class="preco">R$ 5,00</div>
-                    <button class="btn-add" onclick="adicionarAoCarrinho('Hamburguer', 5.00)">Adicionar 🛒</button>
-                </div>
-            </div>
-            
-            <!-- Produto 12 -->
-            <div class="produto">
-                <img src="img/high-angle-delicious-food-croquettes.jpg">
-                <div class="produto-info">
-                    <h3>Joelho Misto</h3>
-                    <p>Farinha, Frango.</p>
-                    <div class="preco">R$ 5,00</div>
-                    <button class="btn-add" onclick="adicionarAoCarrinho('Joelho Misto', 5.00)">Adicionar 🛒</button>
-                </div>
-            </div>
-            
-            <!-- Produto 13 -->
-            <div class="produto">
-                <img src="img/high-angle-delicious-food-croquettes.jpg">
-                <div class="produto-info">
-                    <h3>Mini Esfiha</h3>
-                    <p>Farinha, Frango.</p>
-                    <div class="preco">R$ 5,00</div>
-                    <button class="btn-add" onclick="adicionarAoCarrinho('Mini Esfiha', 5.00)">Adicionar 🛒</button>
-                </div>
-            </div>
-            
-            <!-- Produto 14 -->
-            <div class="produto">
-                <img src="img/high-angle-delicious-food-croquettes.jpg">
-                <div class="produto-info">
-                    <h3>Mini Pizza</h3>
-                    <p>Farinha, Frango.</p>
-                    <div class="preco">R$ 6,00</div>
-                    <button class="btn-add" onclick="adicionarAoCarrinho('Mini Pizza', 6.00)">Adicionar 🛒</button>
-                </div>
-            </div>
-            
-            <!-- Produto 15 -->
-            <div class="produto">
-                <img src="img/high-angle-delicious-food-croquettes.jpg">
-                <div class="produto-info">
-                    <h3>Outro Salgados P/ Revenda</h3>
-                    <p>Farinha, Frango.</p>
-                    <div class="preco">R$ 3,00</div>
-                    <button class="btn-add" onclick="adicionarAoCarrinho('Outro Salgados P/ Revenda', 3.00)">Adicionar 🛒</button>
-                </div>
-            </div>
-            
-            <!-- Produto 16 -->
-            <div class="produto">
-                <img src="img/high-angle-delicious-food-croquettes.jpg">
-                <div class="produto-info">
-                    <h3>Pastel P/ Revenda</h3>
-                    <p>Farinha, Frango.</p>
-                    <div class="preco">R$ 3,00</div>
-                    <button class="btn-add" onclick="adicionarAoCarrinho('Pastel P/ Revenda', 3.00)">Adicionar 🛒</button>
-                </div>
-            </div>
-            
-            <!-- Produto 17 -->
-            <div class="produto">
-                <img src="img/high-angle-delicious-food-croquettes.jpg">
-                <div class="produto-info">
-                    <h3>Pastel Chinês</h3>
-                    <p>Farinha, Frango.</p>
-                    <div class="preco">R$ 5,00</div>
-                    <button class="btn-add" onclick="adicionarAoCarrinho('Pastel Chinês', 5.00)">Adicionar 🛒</button>
-                </div>
-            </div>
-            
-            <!-- Produto 18 -->
-            <div class="produto">
-                <img src="img/high-angle-delicious-food-croquettes.jpg">
-                <div class="produto-info">
-                    <h3>Pastel de Feira</h3>
-                    <p>Farinha, Frango.</p>
-                    <div class="preco">R$ 5,00</div>
-                    <button class="btn-add" onclick="adicionarAoCarrinho('Pastel de Feira', 5.00)">Adicionar 🛒</button>
-                </div>
-            </div>
-            
-            <!-- Produto 19 -->
-            <div class="produto">
-                <img src="img/high-angle-delicious-food-croquettes.jpg">
-                <div class="produto-info">
-                    <h3>Pastelão de Frango</h3>
-                    <p>Farinha, Frango.</p>
-                    <div class="preco">R$ 5,00</div>
-                    <button class="btn-add" onclick="adicionarAoCarrinho('Pastelão de Frango', 5.00)">Adicionar 🛒</button>
-                </div>
-            </div>
-            
-            <!-- Produto 20 -->
-            <div class="produto">
-                <img src="img/high-angle-delicious-food-croquettes.jpg">
-                <div class="produto-info">
-                    <h3>Pastelão Misto</h3>
-                    <p>Farinha, Frango.</p>
-                    <div class="preco">R$ 5,00</div>
-                    <button class="btn-add" onclick="adicionarAoCarrinho('Pastelão Misto', 5.00)">Adicionar 🛒</button>
-                </div>
-            </div>
-            
-            <!-- Produto 21 -->
-            <div class="produto">
-                <img src="img/high-angle-delicious-food-croquettes.jpg">
-                <div class="produto-info">
-                    <h3>Pastel de Forno</h3>
-                    <p>Farinha, Frango.</p>
-                    <div class="preco">R$ 5,00</div>
-                    <button class="btn-add" onclick="adicionarAoCarrinho('Pastel de Forno', 5.00)">Adicionar 🛒</button>
-                </div>
-            </div>
-            
-            <!-- Produto 22 -->
-            <div class="produto">
-                <img src="img/high-angle-delicious-food-croquettes.jpg">
-                <div class="produto-info">
-                    <h3>Pastel de Queijo</h3>
-                    <p>Farinha, Frango.</p>
-                    <div class="preco">R$ 5,00</div>
-                    <button class="btn-add" onclick="adicionarAoCarrinho('Pastel de Queijo', 5.00)">Adicionar 🛒</button>
-                </div>
-            </div>
-            
-            <!-- Produto 23 -->
-            <div class="produto">
-                <img src="img/high-angle-delicious-food-croquettes.jpg">
-                <div class="produto-info">
-                    <h3>Pizza Familia</h3>
-                    <p>Farinha, Frango.</p>
-                    <div class="preco">R$ 40,00</div>
-                    <button class="btn-add" onclick="adicionarAoCarrinho('Pizza Familia', 40.00)">Adicionar 🛒</button>
-                </div>
-            </div>
-            
-            <!-- Produto 24 -->
-            <div class="produto">
-                <img src="img/high-angle-delicious-food-croquettes.jpg">
-                <div class="produto-info">
-                    <h3>Salgados de Festa</h3>
-                    <p>Farinha, Frango.</p>
-                    <div class="preco">R$ 0,60</div>
-                    <button class="btn-add" onclick="adicionarAoCarrinho('Salgados de Festa', 0.60)">Adicionar 🛒</button>
-                </div>
-            </div>
-            
-        </div>
+            </div> <!-- Fim Coluna Bebidas -->
+
+        </div> <!-- Fim Layout Duas Colunas -->
     </section>
 
     <!-- Rodapé / Contato -->
@@ -688,7 +1011,8 @@
         <p>📍 Rua Francisco Cabral, 209 - Centro - Riachão do Bacamarte-PB</p>
         <p>📞 WhatsApp: (83) 9 9338-1587 / (83) 9 9343-0616</p>
         <p>📱 Instagram: @bar_e_lanchonete_gigabyte</p>
-        <p>🕒 Horário de funcionamento: Terça a Domingo, das 18h às 23h</p>
+        <p>🕒 Horário de funcionamento da Loja Fsica: Terça a Domingo, das 18h às 23h</p>
+        <p>🕒 Horário de funcionamento do Delivery: Terça a Domingo, das 18h às 23h</p>
         <br>
         <p><small>&copy; 2026 GigaByte. Todos os direitos reservados.</small></p>
     </footer>
