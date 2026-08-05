@@ -102,18 +102,84 @@
         /* Cardápio */
         .cardapio {
             padding: 60px 20px;
-            max-width: 1400px; /* Aumentado um pouco para caber duas colunas melhor */
+            max-width: 1400px;
             margin: 0 auto;
         }
 
         .titulo-principal {
             text-align: center;
             font-size: 2.5rem;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             color: var(--neon-green);
             text-transform: uppercase;
             letter-spacing: 2px;
             text-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
+        }
+
+        /* --- MELHORIA 1: Estilos da Busca e Filtros --- */
+        .search-filter-container {
+            max-width: 800px;
+            margin: 0 auto 40px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .search-box {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 14px 20px 14px 45px;
+            background-color: var(--panel-bg);
+            border: 2px solid #333;
+            border-radius: 30px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--neon-green);
+            box-shadow: 0 0 12px rgba(57, 255, 20, 0.3);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.1rem;
+            color: #888;
+        }
+
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-filter {
+            background-color: #222;
+            color: white;
+            border: 1px solid #444;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-filter.active, .btn-filter:hover {
+            background-color: var(--neon-green);
+            color: black;
+            border-color: var(--neon-green);
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
         }
 
         /* Layout em Duas Colunas para Categorias */
@@ -121,7 +187,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 40px;
-            align-items: start; /* Importante para o sticky funcionar independente em cada coluna */
+            align-items: start;
         }
 
         .coluna-categoria {
@@ -138,11 +204,10 @@
             padding: 15px 0;
             margin-bottom: 25px;
             border-bottom: 2px solid var(--neon-green);
-            background-color: rgba(10, 10, 10, 0.98); /* Fundo para não misturar com as imagens ao rolar */
+            background-color: rgba(10, 10, 10, 0.98);
             
-            /* Efeito Flutuante (Sticky) */
             position: sticky;
-            top: 73px; /* Fica logo abaixo do header (que tem ~73px de altura) */
+            top: 73px;
             z-index: 90;
             box-shadow: 0 10px 10px -10px rgba(0,0,0,0.8);
         }
@@ -351,12 +416,14 @@
             right: 30px;
             background-color: var(--neon-green);
             color: black;
-            width: 60px;
+            width: auto;
+            padding: 0 20px;
             height: 60px;
-            border-radius: 50%;
+            border-radius: 30px;
             display: flex;
             justify-content: center;
             align-items: center;
+            gap: 10px;
             font-size: 1.5rem;
             cursor: pointer;
             box-shadow: 0 0 20px rgba(40, 201, 11, 0.5);
@@ -366,7 +433,12 @@
         }
 
         .cart-fab:hover {
-            transform: scale(1.1);
+            transform: scale(1.05);
+        }
+        
+        #cart-fab-total {
+            font-size: 1.1rem;
+            font-weight: bold;
         }
 
         .cart-badge {
@@ -385,13 +457,13 @@
             align-items: center;
         }
 
-        /* Rodapé */
+        /* --- MELHORIA 3: Rodapé e Ajustes Mobile --- */
         footer {
             background-color: #050505;
             border-top: 1px solid #222;
             color: #aaa;
             text-align: center;
-            padding: 40px 20px;
+            padding: 40px 20px 110px 20px; /* Padding inferior aumentado para evitar sobreposição do botão flutuante */
             margin-top: 40px;
         }
 
@@ -403,11 +475,11 @@
 
         footer p { margin-bottom: 5px; }
 
-        /* Responsividade */
+        /* Responsividade e Alinhamentos */
         @media (max-width: 992px) {
             .layout-categorias {
-                grid-template-columns: 1fr; /* No celular/tablet, fica uma categoria debaixo da outra */
-                gap: 60px;
+                grid-template-columns: 1fr;
+                gap: 40px;
             }
         }
 
@@ -426,8 +498,89 @@
                 font-size: 1rem;
             }
             .titulo-categoria {
-                top: 105px; /* Ajuste do sticky para celular, pois o cabeçalho fica mais alto */
+                top: 105px;
             }
+            .cart-fab {
+                bottom: 20px;
+                right: 20px;
+                height: 52px;
+                padding: 0 16px;
+                font-size: 1.2rem;
+            }
+            #cart-fab-total {
+                font-size: 0.95rem;
+            }
+            #cart-panel {
+                width: 100vw;
+            }
+        }
+
+        /* Seleção Lanchonete/Delivery */
+        .order-type-selection {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #333;
+        }
+        
+        .order-type-selection p {
+            color: white;
+            margin-bottom: 10px;
+            font-weight: bold;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+
+        .order-type-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .order-type-buttons input[type="radio"] {
+            display: none;
+        }
+
+        .order-type-buttons label {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            background-color: #222;
+            color: white;
+            border: 2px solid #333;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .order-type-buttons input[type="radio"]:checked + label {
+            background-color: transparent;
+            color: var(--neon-green);
+            border-color: var(--neon-green);
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.2);
+        }
+
+        /* Formulário do Cliente */
+        .order-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .order-form input {
+            width: 100%;
+            padding: 10px;
+            background-color: #222;
+            border: 1px solid #444;
+            color: white;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .order-form input:focus {
+            outline: none;
+            border-color: var(--neon-green);
         }
     </style>
 </head>
@@ -453,6 +606,20 @@
     <!-- Seção de Cardápio -->
     <section id="cardapio" class="cardapio">
         <h2 class="titulo-principal">Cardápio Digital</h2>
+
+        <!-- MELHORIA 1: Barra de Pesquisa e Filtros -->
+        <div class="search-filter-container">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="search-input" placeholder="Buscar item (ex: Coxinha, Coca-Cola)..." oninput="filtrarProdutos()">
+            </div>
+            <div class="filter-buttons">
+                <button class="btn-filter active" onclick="setFiltro('todos', this)">Todos</button>
+                <button class="btn-filter" onclick="setFiltro('Salgados', this)">Salgados</button>
+                <button class="btn-filter" onclick="setFiltro('Bebidas', this)">Só Bebidas</button>
+                <button class="btn-filter" onclick="setFiltro('revenda', this)">Revenda</button>
+            </div>
+        </div>
         
         <!-- Container Lado a Lado -->
         <div class="layout-categorias">
@@ -463,18 +630,16 @@
                 
                 <div class="grid-produtos">
                     
-                    <!-- Produto 1 -->
                     <div class="produto">
-                        <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Bolo de Macacheira">
+                        <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Bolo de Macaxeira">
                         <div class="produto-info">
-                            <h3>Bolo de Macacheira</h3>
+                            <h3>Bolo de Macaxeira</h3>
                             <p>Farinha, Frango.</p>
                             <div class="preco">R$ 5,00</div>
-                            <button class="btn-add" onclick="adicionarAoCarrinho('Bolo de Macacheira', 5.00)">Adicionar 🛒</button>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Bolo de Macaxeira', 5.00)">Adicionar 🛒</button>
                         </div>
                     </div>
 
-                    <!-- Produto 2 -->
                     <div class="produto">
                         <img src="img/close-up-traditional-indian-bakery-pies.jpg" alt="Bolinho Misto">
                         <div class="produto-info">
@@ -485,7 +650,6 @@
                         </div>
                     </div>
 
-                    <!-- Produto 3 -->
                     <div class="produto">
                         <img src="img/tart-cheese.jpg" alt="Cachorro Quente">
                         <div class="produto-info">
@@ -496,7 +660,6 @@
                         </div>
                     </div>
 
-                    <!-- Produto 4 -->
                     <div class="produto">
                         <img src="img/tart-cheese.jpg" alt="Coxinha de Frango">
                         <div class="produto-info">
@@ -507,7 +670,6 @@
                         </div>
                     </div>
                     
-                    <!-- Produto 5 -->
                     <div class="produto">
                         <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Coxinha Pequena">
                         <div class="produto-info">
@@ -518,7 +680,6 @@
                         </div>
                     </div>
                     
-                    <!-- Produto 6 -->
                     <div class="produto">
                         <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Coxinha P/ Revenda">
                         <div class="produto-info">
@@ -529,7 +690,6 @@
                         </div>
                     </div>
                     
-                    <!-- Produto 7 -->
                     <div class="produto">
                         <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Empadinha">
                         <div class="produto-info">
@@ -540,7 +700,6 @@
                         </div>
                     </div>
                     
-                    <!-- Produto 8 -->
                     <div class="produto">
                         <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Empadão (Fatia)">
                         <div class="produto-info">
@@ -551,7 +710,6 @@
                         </div>
                     </div>
                     
-                    <!-- Produto 9 -->
                     <div class="produto">
                         <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Empadão (Unidade)">
                         <div class="produto-info">
@@ -562,29 +720,26 @@
                         </div>
                     </div>
                     
-                    <!-- Produto 10 -->
                     <div class="produto">
-                        <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Enrroladinho de Salsicha">
+                        <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Enroladinho de Salsicha">
                         <div class="produto-info">
-                            <h3>Enrroladinho de Salsicha</h3>
+                            <h3>Enroladinho de Salsicha</h3>
                             <p>Farinha, Frango.</p>
                             <div class="preco">R$ 5,00</div>
-                            <button class="btn-add" onclick="adicionarAoCarrinho('Enrroladinho de Salsicha', 5.00)">Adicionar 🛒</button>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Enroladinho de Salsicha', 5.00)">Adicionar 🛒</button>
                         </div>
                     </div>
                     
-                    <!-- Produto 11 -->
                     <div class="produto">
-                        <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Hamburguer">
+                        <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Hambúrguer">
                         <div class="produto-info">
-                            <h3>Hamburguer</h3>
+                            <h3>Hambúrguer</h3>
                             <p>Farinha, Frango.</p>
                             <div class="preco">R$ 5,00</div>
-                            <button class="btn-add" onclick="adicionarAoCarrinho('Hamburguer', 5.00)">Adicionar 🛒</button>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Hambúrguer', 5.00)">Adicionar 🛒</button>
                         </div>
                     </div>
                     
-                    <!-- Produto 12 -->
                     <div class="produto">
                         <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Joelho Misto">
                         <div class="produto-info">
@@ -595,7 +750,6 @@
                         </div>
                     </div>
                     
-                    <!-- Produto 13 -->
                     <div class="produto">
                         <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Mini Esfiha">
                         <div class="produto-info">
@@ -606,7 +760,6 @@
                         </div>
                     </div>
                     
-                    <!-- Produto 14 -->
                     <div class="produto">
                         <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Mini Pizza">
                         <div class="produto-info">
@@ -617,9 +770,8 @@
                         </div>
                     </div>
                     
-                    <!-- Produto 15 -->
                     <div class="produto">
-                        <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Outro Salgados P/ Revenda">
+                        <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Outros Salgados P/ Revenda">
                         <div class="produto-info">
                             <h3>Outros Salgados</h3>
                             <p>Farinha, Frango.</p>
@@ -628,7 +780,6 @@
                         </div>
                     </div>
                     
-                    <!-- Produto 16 -->
                     <div class="produto">
                         <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Pastel P/ Revenda">
                         <div class="produto-info">
@@ -639,7 +790,6 @@
                         </div>
                     </div>
                     
-                    <!-- Produto 17 -->
                     <div class="produto">
                         <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Pastel Chinês">
                         <div class="produto-info">
@@ -650,7 +800,6 @@
                         </div>
                     </div>
                     
-                    <!-- Produto 18 -->
                     <div class="produto">
                         <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Pastel de Feira">
                         <div class="produto-info">
@@ -661,7 +810,6 @@
                         </div>
                     </div>
                     
-                    <!-- Produto 19 -->
                     <div class="produto">
                         <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Pastelão de Frango">
                         <div class="produto-info">
@@ -672,7 +820,6 @@
                         </div>
                     </div>
                     
-                    <!-- Produto 20 -->
                     <div class="produto">
                         <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Pastelão Misto">
                         <div class="produto-info">
@@ -683,7 +830,6 @@
                         </div>
                     </div>
                     
-                    <!-- Produto 21 -->
                     <div class="produto">
                         <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Pastel de Forno">
                         <div class="produto-info">
@@ -694,7 +840,6 @@
                         </div>
                     </div>
                     
-                    <!-- Produto 22 -->
                     <div class="produto">
                         <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Pastel de Queijo">
                         <div class="produto-info">
@@ -705,18 +850,16 @@
                         </div>
                     </div>
                     
-                    <!-- Produto 23 -->
                     <div class="produto">
-                        <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Pizza Familia">
+                        <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Pizza Família">
                         <div class="produto-info">
-                            <h3>Pizza Familia</h3>
+                            <h3>Pizza Família</h3>
                             <p>Farinha, Frango.</p>
                             <div class="preco">R$ 40,00</div>
-                            <button class="btn-add" onclick="adicionarAoCarrinho('Pizza Familia', 40.00)">Adicionar 🛒</button>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Pizza Família', 40.00)">Adicionar 🛒</button>
                         </div>
                     </div>
                     
-                    <!-- Produto 24 -->
                     <div class="produto">
                         <img src="img/high-angle-delicious-food-croquettes.jpg" alt="Salgados de Festa">
                         <div class="produto-info">
@@ -735,10 +878,8 @@
                 
                 <div class="grid-produtos">
                     
-                    <!-- Bebida 1 -->
                     <div class="produto">
-                        <!-- Lembre-se de substituir o caminho da imagem pela sua imagem real -->
-                        <img src="img/coca-cola-2l.jpg" alt="Coca-Cola 2L" onerror="this.src='https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=300&q=80'">
+                        <img src="img/coca-cola-2l.jpg" alt="Água Mineral s/ Gás" onerror="this.src='https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=300&q=80'">
                         <div class="produto-info">
                             <h3>Água Mineral s/ Gás 500 ml</h3>
                             <p>Água.</p>
@@ -747,9 +888,8 @@
                         </div>
                     </div>
 
-                    <!-- Bebida 2 -->
                     <div class="produto">
-                        <img src="img/guarana-1l.jpg" alt="Guaraná Antarctica 1L" onerror="this.src='https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?auto=format&fit=crop&w=300&q=80'">
+                        <img src="img/guarana-1l.jpg" alt="Água Mineral c/ Gás" onerror="this.src='https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?auto=format&fit=crop&w=300&q=80'">
                         <div class="produto-info">
                             <h3>Água Mineral c/ Gás 500ml</h3>
                             <p>Água.</p>
@@ -758,9 +898,8 @@
                         </div>
                     </div>
 
-                    <!-- Bebida 3 -->
                     <div class="produto">
-                        <img src="img/suco-laranja.jpg" alt="Suco de Laranja" onerror="this.src='https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=300&q=80'">
+                        <img src="img/suco-laranja.jpg" alt="Brejeira Dose" onerror="this.src='https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=300&q=80'">
                         <div class="produto-info">
                             <h3>Brejeira Dose</h3>
                             <p>Brejeira.</p>
@@ -769,21 +908,18 @@
                         </div>
                     </div>
 
-                    <!-- Bebida 4 -->
                     <div class="produto">
-                        <img src="img/agua-mineral.jpg" alt="Água Mineral" onerror="this.src='https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=300&q=80'">
+                        <img src="img/agua-mineral.jpg" alt="Brejeira Litro" onerror="this.src='https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=300&q=80'">
                         <div class="produto-info">
                             <h3>Brejeira Litro</h3>
                             <p>Brejeira.</p>
-                            <div class="preco">R$12,00</div>
+                            <div class="preco">R$ 12,00</div>
                             <button class="btn-add" onclick="adicionarAoCarrinho('Brejeira Litro', 12.00)">Adicionar 🛒</button>
                         </div>
                     </div>
 
-                    <!-- Bebida 5 -->
                     <div class="produto">
-                        <!-- Lembre-se de substituir o caminho da imagem pela sua imagem real -->
-                        <img src="img/coca-cola-2l.jpg" alt="Coca-Cola 2L" onerror="this.src='https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=300&q=80'">
+                        <img src="img/coca-cola-2l.jpg" alt="Cerveja Litrão" onerror="this.src='https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=300&q=80'">
                         <div class="produto-info">
                             <h3>Cerveja Litrão</h3>
                             <p>Cerveja.</p>
@@ -792,10 +928,8 @@
                         </div>
                     </div>
 
-                    <!-- Bebida 6 -->
                     <div class="produto">
-                        <!-- Lembre-se de substituir o caminho da imagem pela sua imagem real -->
-                        <img src="img/coca-cola-2l.jpg" alt="Coca-Cola 2L" onerror="this.src='https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=300&q=80'">
+                        <img src="img/coca-cola-2l.jpg" alt="Cerveja 600ml" onerror="this.src='https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=300&q=80'">
                         <div class="produto-info">
                             <h3>Cerveja 600ml</h3>
                             <p>Cerveja.</p>
@@ -804,10 +938,8 @@
                         </div>
                     </div>
 
-                    <!-- Bebida 7 -->
                     <div class="produto">
-                        <!-- Lembre-se de substituir o caminho da imagem pela sua imagem real -->
-                        <img src="img/coca-cola-2l.jpg" alt="Coca-Cola 2L" onerror="this.src='https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=300&q=80'">
+                        <img src="img/coca-cola-2l.jpg" alt="Cerveja Latinha 350ml" onerror="this.src='https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=300&q=80'">
                         <div class="produto-info">
                             <h3>Cerveja Latinha 350ml</h3>
                             <p>Cerveja.</p>
@@ -816,10 +948,8 @@
                         </div>
                     </div>
 
-                    <!-- Bebida 8 -->
                     <div class="produto">
-                        <!-- Lembre-se de substituir o caminho da imagem pela sua imagem real -->
-                        <img src="img/coca-cola-2l.jpg" alt="Coca-Cola 2L" onerror="this.src='https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=300&q=80'">
+                        <img src="img/coca-cola-2l.jpg" alt="Cerveja Itaipava Latão 473ml" onerror="this.src='https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=300&q=80'">
                         <div class="produto-info">
                             <h3>Cerveja Itaipava Latão 473ml</h3>
                             <p>Cerveja.</p>
@@ -828,34 +958,28 @@
                         </div>
                     </div>
 
-                    <!-- Bebida 9 -->
                     <div class="produto">
-                        <!-- Lembre-se de substituir o caminho da imagem pela sua imagem real -->
-                        <img src="img/coca-cola-2l.jpg" alt="Coca-Cola 2L" onerror="this.src='https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=300&q=80'">
+                        <img src="img/coca-cola-2l.jpg" alt="Cerveja Antártica Latão 473ml" onerror="this.src='https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=300&q=80'">
                         <div class="produto-info">
-                            <h3>Cerveja Antartica Latão 473ml</h3>
+                            <h3>Cerveja Antártica Latão 473ml</h3>
                             <p>Cerveja.</p>
                             <div class="preco">R$ 6,00</div>
-                            <button class="btn-add" onclick="adicionarAoCarrinho('Cerveja Antartica Latão 473ml', 6.00)">Adicionar 🛒</button>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Cerveja Antártica Latão 473ml', 6.00)">Adicionar 🛒</button>
                         </div>
                     </div>
 
-                    <!-- Bebida 10 -->
                     <div class="produto">
-                        <!-- Lembre-se de substituir o caminho da imagem pela sua imagem real -->
-                        <img src="img/coca-cola-2l.jpg" alt="Coca-Cola 2L" onerror="this.src='https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=300&q=80'">
+                        <img src="img/coca-cola-2l.jpg" alt="Coca-Cola 2L (Retornável)" onerror="this.src='https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=300&q=80'">
                         <div class="produto-info">
-                            <h3>Coca-Cola 2L (Retornavel)</h3>
+                            <h3>Coca-Cola 2L (Retornável)</h3>
                             <p>Refrigerante Gelado.</p>
                             <div class="preco">R$ 12,00</div>
-                            <button class="btn-add" onclick="adicionarAoCarrinho('Coca-Cola 2L (Retornavel)', 12.00)">Adicionar 🛒</button>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Coca-Cola 2L (Retornável)', 12.00)">Adicionar 🛒</button>
                         </div>
                     </div>
 
-                    <!-- Bebida 11 -->
                     <div class="produto">
-                        <!-- Lembre-se de substituir o caminho da imagem pela sua imagem real -->
-                        <img src="img/coca-cola-2l.jpg" alt="Coca-Cola 2L" onerror="this.src='https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=300&q=80'">
+                        <img src="img/coca-cola-2l.jpg" alt="Coca-Cola 2L (Pet)" onerror="this.src='https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=300&q=80'">
                         <div class="produto-info">
                             <h3>Coca-Cola 2L (Pet)</h3>
                             <p>Refrigerante Gelado.</p>
@@ -864,10 +988,8 @@
                         </div>
                     </div>
 
-                    <!-- Bebida 12 -->
                     <div class="produto">
-                        <!-- Lembre-se de substituir o caminho da imagem pela sua imagem real -->
-                        <img src="img/coca-cola-2l.jpg" alt="Coca-Cola 2L" onerror="this.src='https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=300&q=80'">
+                        <img src="img/coca-cola-2l.jpg" alt="Coca-Cola 2,5L (Pet)" onerror="this.src='https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=300&q=80'">
                         <div class="produto-info">
                             <h3>Coca-Cola 2,5L (Pet)</h3>
                             <p>Refrigerante Gelado.</p>
@@ -876,10 +998,8 @@
                         </div>
                     </div>
 
-                    <!-- Bebida 13 -->
                     <div class="produto">
-                        <!-- Lembre-se de substituir o caminho da imagem pela sua imagem real -->
-                        <img src="img/coca-cola-2l.jpg" alt="Coca-Cola 2L" onerror="this.src='https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=300&q=80'">
+                        <img src="img/coca-cola-2l.jpg" alt="Coca-Cola 1L LS" onerror="this.src='https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=300&q=80'">
                         <div class="produto-info">
                             <h3>Coca-Cola 1L LS</h3>
                             <p>Refrigerante Gelado.</p>
@@ -888,10 +1008,8 @@
                         </div>
                     </div>
 
-                    <!-- Bebida 14 -->
                     <div class="produto">
-                        <!-- Lembre-se de substituir o caminho da imagem pela sua imagem real -->
-                        <img src="img/coca-cola-2l.jpg" alt="Coca-Cola 2L" onerror="this.src='https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=300&q=80'">
+                        <img src="img/coca-cola-2l.jpg" alt="Coca-Cola KS 290ml" onerror="this.src='https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=300&q=80'">
                         <div class="produto-info">
                             <h3>Coca-Cola KS 290ml</h3>
                             <p>Refrigerante Gelado.</p>
@@ -900,9 +1018,8 @@
                         </div>
                     </div>
                     
-                    <!-- Bebida 15 -->
                     <div class="produto">
-                        <img src="img/guarana-1l.jpg" alt="Guaraná Antarctica 1L" onerror="this.src='https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?auto=format&fit=crop&w=300&q=80'">
+                        <img src="img/guarana-1l.jpg" alt="Coca-Cola NS 200ml" onerror="this.src='https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?auto=format&fit=crop&w=300&q=80'">
                         <div class="produto-info">
                             <h3>Coca-Cola NS 200ml</h3>
                             <p>Refrigerante Gelado.</p>
@@ -911,9 +1028,8 @@
                         </div>
                     </div>
 
-                    <!-- Bebida 16 -->
                     <div class="produto">
-                        <img src="img/guarana-1l.jpg" alt="Guaraná Antarctica 1L" onerror="this.src='https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?auto=format&fit=crop&w=300&q=80'">
+                        <img src="img/guarana-1l.jpg" alt="Coca-Cola Pet 250ml" onerror="this.src='https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?auto=format&fit=crop&w=300&q=80'">
                         <div class="produto-info">
                             <h3>Coca-Cola Pet 250ml</h3>
                             <p>Refrigerante Gelado.</p>
@@ -922,9 +1038,8 @@
                         </div>
                     </div>
 
-                    <!-- Bebida 17 -->
                     <div class="produto">
-                        <img src="img/guarana-1l.jpg" alt="Guaraná Antarctica 1L" onerror="this.src='https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?auto=format&fit=crop&w=300&q=80'">
+                        <img src="img/guarana-1l.jpg" alt="Dreher Dose" onerror="this.src='https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?auto=format&fit=crop&w=300&q=80'">
                         <div class="produto-info">
                             <h3>Dreher Dose</h3>
                             <p>Destilado</p>
@@ -933,9 +1048,8 @@
                         </div>
                     </div>
 
-                    <!-- Bebida 18 -->
                     <div class="produto">
-                        <img src="img/guarana-1l.jpg" alt="Guaraná Antarctica 1L" onerror="this.src='https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?auto=format&fit=crop&w=300&q=80'">
+                        <img src="img/guarana-1l.jpg" alt="Dreher Litro" onerror="this.src='https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?auto=format&fit=crop&w=300&q=80'">
                         <div class="produto-info">
                             <h3>Dreher Litro</h3>
                             <p>Destilado</p>
@@ -944,42 +1058,38 @@
                         </div>
                     </div>
 
-                    <!-- Bebida 19 -->
                     <div class="produto">
-                        <img src="img/guarana-1l.jpg" alt="Guaraná Antarctica 1L" onerror="this.src='https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?auto=format&fit=crop&w=300&q=80'">
+                        <img src="img/guarana-1l.jpg" alt="Energético 2L" onerror="this.src='https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?auto=format&fit=crop&w=300&q=80'">
                         <div class="produto-info">
-                            <h3>Energetico 2L</h3>
-                            <p>Energetico.</p>
+                            <h3>Energético 2L</h3>
+                            <p>Energético.</p>
                             <div class="preco">R$ 15,00</div>
-                            <button class="btn-add" onclick="adicionarAoCarrinho('Energetico 2L', 15.00)">Adicionar 🛒</button>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Energético 2L', 15.00)">Adicionar 🛒</button>
                         </div>
                     </div>
 
-                    <!-- Bebida 20 -->
                     <div class="produto">
-                        <img src="img/suco-laranja.jpg" alt="Suco de Laranja" onerror="this.src='https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=300&q=80'">
+                        <img src="img/suco-laranja.jpg" alt="Energético Lata 470 ml" onerror="this.src='https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=300&q=80'">
                         <div class="produto-info">
-                            <h3>Energetico Lata 470 ml</h3>
-                            <p>Energetico.</p>
+                            <h3>Energético Lata 470 ml</h3>
+                            <p>Energético.</p>
                             <div class="preco">R$ 12,00</div>
-                            <button class="btn-add" onclick="adicionarAoCarrinho('Energetico Lata 470 ml', 12.00)">Adicionar 🛒</button>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Energético Lata 470 ml', 12.00)">Adicionar 🛒</button>
                         </div>
                     </div>
 
-                    <!-- Bebida 21 -->
                     <div class="produto">
-                        <img src="img/suco-laranja.jpg" alt="Suco de Laranja" onerror="this.src='https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=300&q=80'">
+                        <img src="img/suco-laranja.jpg" alt="Energético Lata 269 ml" onerror="this.src='https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=300&q=80'">
                         <div class="produto-info">
-                            <h3>Energetico Lata 269 ml</h3>
-                            <p>Energetico.</p>
+                            <h3>Energético Lata 269 ml</h3>
+                            <p>Energético.</p>
                             <div class="preco">R$ 10,00</div>
-                            <button class="btn-add" onclick="adicionarAoCarrinho('Energetico Lata 269 ml', 10.00)">Adicionar 🛒</button>
+                            <button class="btn-add" onclick="adicionarAoCarrinho('Energético Lata 269 ml', 10.00)">Adicionar 🛒</button>
                         </div>
                     </div>
 
-                    <!-- Bebida 22 -->
                     <div class="produto">
-                        <img src="img/suco-laranja.jpg" alt="Suco de Laranja" onerror="this.src='https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=300&q=80'">
+                        <img src="img/suco-laranja.jpg" alt="Montilla Dose" onerror="this.src='https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=300&q=80'">
                         <div class="produto-info">
                             <h3>Montilla Dose</h3>
                             <p>Destilado</p>
@@ -988,9 +1098,8 @@
                         </div>
                     </div>
 
-                    <!-- Bebida 23 -->
                     <div class="produto">
-                        <img src="img/suco-laranja.jpg" alt="Suco de Laranja" onerror="this.src='https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=300&q=80'">
+                        <img src="img/suco-laranja.jpg" alt="Montilla Litro" onerror="this.src='https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=300&q=80'">
                         <div class="produto-info">
                             <h3>Montilla Litro</h3>
                             <p>Destilado</p>
@@ -999,9 +1108,8 @@
                         </div>
                     </div>
 
-                    <!-- Bebida 24 -->
                     <div class="produto">
-                        <img src="img/suco-laranja.jpg" alt="Suco de Laranja" onerror="this.src='https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=300&q=80'">
+                        <img src="img/suco-laranja.jpg" alt="Refrigerante 2L" onerror="this.src='https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=300&q=80'">
                         <div class="produto-info">
                             <h3>Refrigerante 2L</h3>
                             <p>Refrigerante Gelado.</p>
@@ -1010,9 +1118,8 @@
                         </div>
                     </div>
 
-                    <!-- Bebida 25 -->
                     <div class="produto">
-                        <img src="img/suco-laranja.jpg" alt="Suco de Laranja" onerror="this.src='https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=300&q=80'">
+                        <img src="img/suco-laranja.jpg" alt="Refrigerante 1L" onerror="this.src='https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=300&q=80'">
                         <div class="produto-info">
                             <h3>Refrigerante 1L</h3>
                             <p>Refrigerante Gelado.</p>
@@ -1021,9 +1128,8 @@
                         </div>
                     </div>
 
-                    <!-- Bebida 26 -->
                     <div class="produto">
-                        <img src="img/suco-laranja.jpg" alt="Suco de Laranja" onerror="this.src='https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=300&q=80'">
+                        <img src="img/suco-laranja.jpg" alt="Refrigerante 1L Pet" onerror="this.src='https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=300&q=80'">
                         <div class="produto-info">
                             <h3>Refrigerante 1L Pet</h3>
                             <p>Refrigerante Gelado.</p>
@@ -1032,9 +1138,8 @@
                         </div>
                     </div>
 
-                    <!-- Bebida 27 -->
                     <div class="produto">
-                        <img src="img/suco-laranja.jpg" alt="Suco de Laranja" onerror="this.src='https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=300&q=80'">
+                        <img src="img/suco-laranja.jpg" alt="Refrigerante 250ml Pet" onerror="this.src='https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=300&q=80'">
                         <div class="produto-info">
                             <h3>Refrigerante 250ml Pet</h3>
                             <p>Refrigerante Gelado.</p>
@@ -1043,9 +1148,8 @@
                         </div>
                     </div>
 
-                    <!-- Bebida 28 -->
                     <div class="produto">
-                        <img src="img/suco-laranja.jpg" alt="Suco de Laranja" onerror="this.src='https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=300&q=80'">
+                        <img src="img/suco-laranja.jpg" alt="Suco Del Valle (450ml)" onerror="this.src='https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=300&q=80'">
                         <div class="produto-info">
                             <h3>Suco Del Valle (450ml)</h3>
                             <p>Suco.</p>
@@ -1054,9 +1158,8 @@
                         </div>
                     </div>
 
-                    <!-- Bebida 29 -->
                     <div class="produto">
-                        <img src="img/suco-laranja.jpg" alt="Suco de Laranja" onerror="this.src='https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=300&q=80'">
+                        <img src="img/suco-laranja.jpg" alt="Vodka Dose" onerror="this.src='https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=300&q=80'">
                         <div class="produto-info">
                             <h3>Vodka Dose</h3>
                             <p>Destilado.</p>
@@ -1065,9 +1168,8 @@
                         </div>
                     </div>
 
-                    <!-- Bebida 30 -->
                     <div class="produto">
-                        <img src="img/suco-laranja.jpg" alt="Suco de Laranja" onerror="this.src='https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=300&q=80'">
+                        <img src="img/suco-laranja.jpg" alt="Vodka Litro" onerror="this.src='https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=300&q=80'">
                         <div class="produto-info">
                             <h3>Vodka Litro</h3>
                             <p>Destilado.</p>
@@ -1087,7 +1189,7 @@
         <p>📍 Rua Francisco Cabral, 209 - Centro - Riachão do Bacamarte-PB</p>
         <p>📞 WhatsApp: (83) 9 9338-1587 / (83) 9 9343-0616</p>
         <p>📱 Instagram: @bar_e_lanchonete_gigabyte</p>
-        <p>🕒 Horário de funcionamento da Loja Fsica: Terça a Domingo, das 18h às 23h</p>
+        <p>🕒 Horário de funcionamento da Loja Física: Terça a Domingo, das 18h às 23h</p>
         <p>🕒 Horário de funcionamento do Delivery: Terça a Domingo, das 18h às 23h</p>
         <br>
         <p><small>&copy; 2026 GigaByte. Todos os direitos reservados.</small></p>
@@ -1095,6 +1197,7 @@
 
     <!-- Botão Flutuante do Carrinho -->
     <button class="cart-fab" onclick="toggleCart()">
+        <span id="cart-fab-total">R$ 0,00</span>
         🛒
         <span class="cart-badge" id="cart-badge">0</span>
     </button>
@@ -1111,6 +1214,28 @@
         </div>
 
         <div class="cart-footer">
+            
+            <div class="order-type-selection">
+                <p>Onde deseja receber?</p>
+                <div class="order-type-buttons">
+                    <input type="radio" id="type-delivery" name="order-type" value="Delivery" checked>
+                    <label for="type-delivery">🛵 Delivery</label>
+                    
+                    <input type="radio" id="type-lanchonete" name="order-type" value="Na Lanchonete">
+                    <label for="type-lanchonete">🏪 Na Lanchonete</label>
+                </div>
+
+                <div id="form-delivery" class="order-form">
+                    <input type="text" id="cli-nome-delivery" placeholder="Seu Nome (Obrigatório)" required>
+                    <input type="text" id="cli-endereco" placeholder="Endereço de Entrega (Obrigatório)" required>
+                </div>
+                
+                <div id="form-lanchonete" class="order-form" style="display: none;">
+                    <input type="text" id="cli-nome-lanchonete" placeholder="Seu Nome (Obrigatório)" required>
+                    <input type="text" id="cli-mesa" placeholder="Número da Mesa (Obrigatório)" required>
+                </div>
+            </div>
+
             <div class="cart-total">
                 <span>Total:</span>
                 <span id="cart-total-price">R$ 0,00</span>
@@ -1129,9 +1254,26 @@
         </div>
     </div>
 
-    <!-- Script do Carrinho de Compras -->
+    <!-- Scripts da Aplicação -->
     <script>
         let carrinho = [];
+        let filtroCategoriaAtual = 'todos';
+
+        // --- MELHORIA 2: Persistência com LocalStorage ---
+        function carregarCarrinhoDoLocalStorage() {
+            const salvo = localStorage.getItem('gigabyte_carrinho');
+            if (salvo) {
+                try {
+                    carrinho = JSON.parse(salvo);
+                } catch (e) {
+                    carrinho = [];
+                }
+            }
+        }
+
+        function salvarCarrinhoNoLocalStorage() {
+            localStorage.setItem('gigabyte_carrinho', JSON.stringify(carrinho));
+        }
 
         function formatarMoeda(valor) {
             return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -1147,11 +1289,6 @@
             }
             
             atualizarCarrinhoUI();
-            
-            // Abre o carrinho na primeira vez que adiciona
-            if(!document.getElementById('cart-panel').classList.contains('open')) {
-                toggleCart();
-            }
         }
 
         function alterarQuantidade(nome, delta) {
@@ -1169,12 +1306,13 @@
             const container = document.getElementById('cart-items-container');
             const totalElement = document.getElementById('cart-total-price');
             const badge = document.getElementById('cart-badge');
+            const fabTotalElement = document.getElementById('cart-fab-total'); 
             
             container.innerHTML = '';
             let total = 0;
             let quantidadeTotal = 0;
 
-            if(carrinho.length === 0) {
+            if (carrinho.length === 0) {
                 container.innerHTML = '<p style="color: #aaa; text-align: center; margin-top: 20px;">Seu carrinho está vazio.</p>';
             }
 
@@ -1200,6 +1338,10 @@
 
             totalElement.innerText = formatarMoeda(total);
             badge.innerText = quantidadeTotal;
+            fabTotalElement.innerText = formatarMoeda(total);
+
+            // Persiste alterações no navegador
+            salvarCarrinhoNoLocalStorage();
         }
 
         function toggleCart() {
@@ -1207,13 +1349,79 @@
             painel.classList.toggle('open');
         }
 
+        // --- MELHORIA 1: Lógica de Filtros e Busca ---
+        function setFiltro(categoria, btnElement) {
+            filtroCategoriaAtual = categoria;
+            document.querySelectorAll('.btn-filter').forEach(btn => btn.classList.remove('active'));
+            if (btnElement) btnElement.classList.add('active');
+            filtrarProdutos();
+        }
+
+        function filtrarProdutos() {
+            const termoBusca = document.getElementById('search-input').value.toLowerCase().trim();
+            const produtos = document.querySelectorAll('.produto');
+
+            produtos.forEach(produto => {
+                const nome = produto.querySelector('h3').textContent.toLowerCase();
+                const descricao = produto.querySelector('p').textContent.toLowerCase();
+                const coluna = produto.closest('.coluna-categoria').querySelector('.titulo-categoria').textContent.trim();
+
+                let passaFiltroCat = false;
+                if (filtroCategoriaAtual === 'todos') {
+                    passaFiltroCat = true;
+                } else if (filtroCategoriaAtual === 'revenda') {
+                    passaFiltroCat = nome.includes('revenda') || descricao.includes('revenda');
+                } else if (coluna.toLowerCase().includes(filtroCategoriaAtual.toLowerCase())) {
+                    passaFiltroCat = true;
+                }
+
+                let passaBusca = nome.includes(termoBusca) || descricao.includes(termoBusca);
+
+                if (passaFiltroCat && passaBusca) {
+                    produto.style.display = 'block';
+                } else {
+                    produto.style.display = 'none';
+                }
+            });
+        }
+
+        // Finalização do Pedido
         function gerarTextoPedido() {
             if (carrinho.length === 0) {
                 alert('Adicione itens ao carrinho primeiro!');
                 return null;
             }
 
-            let texto = "🍔 *NOVO PEDIDO - GIGABYTE* 🍔\n\n";
+            const tipoPedido = document.querySelector('input[name="order-type"]:checked').value;
+            let nomeCliente = '';
+            let dadosExtras = '';
+
+            if (tipoPedido === 'Delivery') {
+                nomeCliente = document.getElementById('cli-nome-delivery').value.trim();
+                const endereco = document.getElementById('cli-endereco').value.trim();
+                
+                if (!nomeCliente || !endereco) {
+                    alert('Por favor, preencha seu Nome e Endereço para o delivery.');
+                    return null;
+                }
+                dadosExtras = `📍 *Endereço:* ${endereco}\n`;
+            } else {
+                nomeCliente = document.getElementById('cli-nome-lanchonete').value.trim();
+                const mesa = document.getElementById('cli-mesa').value.trim();
+                
+                if (!nomeCliente || !mesa) {
+                    alert('Por favor, preencha seu Nome e o Número da Mesa.');
+                    return null;
+                }
+                dadosExtras = `🍽️ *Mesa:* ${mesa}\n`;
+            }
+
+            let texto = "🍔 *NOVO PEDIDO - GIGABYTE* 🍔\n";
+            texto += `👤 *Cliente:* ${nomeCliente}\n`;
+            texto += `📦 *Tipo:* ${tipoPedido}\n`;
+            texto += dadosExtras;
+            texto += `\n*ITENS DO PEDIDO:*\n`;
+            
             let total = 0;
 
             carrinho.forEach(item => {
@@ -1223,7 +1431,12 @@
             });
 
             texto += `\n💰 *Total do Pedido: ${formatarMoeda(total)}*\n`;
-            texto += "\nPor favor, confirmem o meu pedido! Aguardo informações sobre taxa de entrega e tempo estimado.";
+            
+            if (tipoPedido === 'Delivery') {
+                texto += "\nPor favor, confirmem o meu pedido! Aguardo informações sobre taxa de entrega e tempo estimado.";
+            } else {
+                texto += "\nPor favor, preparem meu pedido! Estou aguardando na mesa.";
+            }
             
             return texto;
         }
@@ -1233,13 +1446,12 @@
             if (!textoPedido) return;
 
             if (plataforma === 'whatsapp') {
-                const numeroWhatsApp = "5583993381587"; // Número primário
+                const numeroWhatsApp = "5583993381587";
                 const textoEncoded = encodeURIComponent(textoPedido);
                 const url = `https://wa.me/${numeroWhatsApp}?text=${textoEncoded}`;
                 window.open(url, '_blank');
             } 
             else if (plataforma === 'instagram') {
-                // Copia o texto para a área de transferência
                 navigator.clipboard.writeText(textoPedido).then(() => {
                     alert('✅ Pedido copiado com sucesso!\n\nVocê será redirecionado para o Instagram. COLOQUE (Cole) a mensagem no Direct da lanchonete.');
                     const urlInstagram = `https://ig.me/m/bar_e_lanchonete_gigabyte`;
@@ -1249,8 +1461,22 @@
                 });
             }
         }
-        
-        // Inicializa interface limpa
+
+        // Alternar formulários Delivery/Lanchonete
+        document.querySelectorAll('input[name="order-type"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (this.value === 'Delivery') {
+                    document.getElementById('form-delivery').style.display = 'flex';
+                    document.getElementById('form-lanchonete').style.display = 'none';
+                } else {
+                    document.getElementById('form-delivery').style.display = 'none';
+                    document.getElementById('form-lanchonete').style.display = 'flex';
+                }
+            });
+        });
+
+        // Inicialização na carga da página
+        carregarCarrinhoDoLocalStorage();
         atualizarCarrinhoUI();
     </script>
 </body>
